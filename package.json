@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "scripts": {
+    "prepublish": "typings install",
+    "watch": "webpack-dev-server --inline --hot"
+  },
+  "dependencies": {
+    "file-loader": "^0.9.0",
+    "ts-loader": "^0.8.2",
+    "typescript": "^2.0.3",
+    "typings": "^1.4.0",
+    "webpack": "^2.1.0-beta.25",
+    "webpack-dev-server": "^2.1.0-beta.7"
+  }
+}
