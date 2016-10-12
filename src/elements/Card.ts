@@ -29,6 +29,12 @@ export default class Card extends DomElement {
     public revealed: boolean;
 
     /**
+     *
+     * @type {string}
+     */
+    protected className: string = 'card';
+
+    /**
      * Create a new Card.
      *
      * @param value
@@ -39,10 +45,9 @@ export default class Card extends DomElement {
         super();
 
         this.value = value;
-        this.suit  = suit;
+        this.suit = suit;
         this.revealed = revealed;
 
-        this.createNode(`${CardValue[value]} ${CardSuit[suit]}`);
     }
 
     /**
@@ -50,8 +55,38 @@ export default class Card extends DomElement {
      *
      * @returns {CardColor}
      */
-    color(): CardColor {
+    public color(): CardColor {
         return (this.suit == CardSuit.Heart || this.suit == CardSuit.Diamond) ? CardColor.Red : CardColor.Black;
     }
 
+    /**
+     *
+     * @returns {HTMLElement}
+     */
+    public newNode(): HTMLElement {
+
+        let node = document.createElement('div');
+        node.classList.add('card');
+        node.setAttribute('data-suit', String(this.suit));
+        node.setAttribute('data-value', String(this.value));
+
+        if (this.revealed) {
+            node.classList.add('card--revealed');
+            node.textContent = `${CardValue[this.value]} ${CardSuit[this.suit]}`;
+
+        } else {
+            node.textContent = 'HIDDEN';
+        }
+
+        node.addEventListener('click', function () {
+            console.log(
+                this.getAttribute('data-pile'),
+                this.getAttribute('data-index'),
+                CardSuit[this.getAttribute('data-suit')],
+                CardValue[this.getAttribute('data-value')]
+            );
+        });
+
+        return node;
+    }
 }

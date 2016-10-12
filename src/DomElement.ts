@@ -2,24 +2,32 @@ export default class DomElement {
 
     /**
      *
+     * @type {HTMLElement}
      */
-    protected node : Node;
+    protected node: HTMLElement;
 
     /**
      *
-     * @param textContent
+     * @type {string}
      */
-    createNode(textContent: string) : void {
+    protected className: string = '';
+
+    /**
+     *
+     * @param {string} textContent
+     */
+    public createNode(textContent: string = ''): void {
         let node = document.createElement('div');
         node.textContent = textContent;
+        node.className = this.className;
         this.node = node;
     }
 
     /**
      *
-     * @returns {Node}
+     * @returns {HTMLElement}
      */
-    getNode() : Node {
+    public getNode(): HTMLElement {
         return this.node;
     }
 }

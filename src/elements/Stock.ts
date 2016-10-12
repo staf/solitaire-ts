@@ -12,12 +12,21 @@ export default class Stock extends DomElement {
     private cards: Card[] = [];
 
     /**
+     * determine if the stock has any cards in it.
+     *
+     * @returns {boolean}
+     */
+    public hasCard(): boolean {
+        return this.cards.length > 0;
+    }
+
+    /**
      * Get a card from the stock.
      * Used when moving cards from the stock to the waste.
      *
      * @returns {Card}
      */
-    get(): Card {
+    public draw(): Card {
         return this.cards.pop();
     }
 
@@ -27,7 +36,7 @@ export default class Stock extends DomElement {
      *
      * @param card
      */
-    undoGet(card: Card): void {
+    public undoDraw(card: Card): void {
         this.cards.push(card);
     }
 
@@ -37,7 +46,7 @@ export default class Stock extends DomElement {
      *
      * @param card
      */
-    add(card: Card): void {
+    public add(card: Card): void {
         this.cards.unshift(card);
     }
 
@@ -47,8 +56,7 @@ export default class Stock extends DomElement {
      *
      * @returns {Card}
      */
-    undoAdd(): Card {
+    public undoAdd(): Card {
         return this.cards.shift();
     }
-
 }

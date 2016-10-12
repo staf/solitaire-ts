@@ -3,7 +3,7 @@ import Card from "./Card";
 import {CardValue, CardSuit} from "../data/CardTypes";
 
 /**
- * A foundation is one of the four piles of cards you aim to fill during the course of the game.
+ * A foundation is one of the four piles of cards you aim to fill during the course of the elements.
  * These each consist of a card suit and must contain the cards of that suit in sequential order.
  */
 export default class Foundation extends DomElement {
