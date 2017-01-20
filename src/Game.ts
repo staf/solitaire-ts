@@ -67,41 +67,10 @@ export default class Game {
         this.stock = new Stock(this);
         Dealer.shuffleCards(Dealer.createCards()).forEach(c => this.stock.add(c));
 
-
         /**
          * Distribute cards to 7 piles in the tableau
          */
-        let tableau: Pile[] = [];
-        for (let i = 0; i < 7; i++) {
-            tableau.push(new Pile(i));
-        }
-
-        let added = 0;
-        while (added < 28) {
-
-            for (let i = 1; i <= tableau.length; i++) {
-                let index = i - 1;
-
-                if (tableau[index].cards.length < index) {
-                    /**
-                     * If there are fewer cards than should be hidden in the pile
-                     * we simply draw a card and add it to the pile.
-                     */
-                    tableau[index].cards.push(this.stock.draw());
-                    added++;
-
-                } else if (tableau[index].cards.length == index) {
-                    /**
-                     * If this is the last card we add to this pile we reveal it
-                     * before adding it to the pile.
-                     */
-                    let card = this.stock.draw();
-                    card.revealed = true;
-                    tableau[index].cards.push(card);
-                    added++;
-                }
-            }
-        }
+        let tableau = Dealer.buildTableau(this.stock);
 
         // Initialize empty waste
         this.waste = new Waste(this);
@@ -128,13 +97,10 @@ export default class Game {
 
         this.board.appendChild(boardHeader);
 
-
         let tableauEl = document.createElement('div');
         tableauEl.classList.add('tableau');
         tableau.forEach(p => tableauEl.appendChild(p.render()));
         this.board.appendChild(tableauEl);
-
-
     }
 
     public drawFromStock() {

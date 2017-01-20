@@ -30,11 +30,9 @@ export default class Card implements GameElement {
      */
     public revealed: boolean;
 
-    /**
-     *
-     * @type {string}
-     */
-    protected className: string = 'card';
+    public isInPile: boolean = false;
+
+    public isInFoundation: boolean = false;
 
     /**
      * Create a new Card.
@@ -76,16 +74,24 @@ export default class Card implements GameElement {
             node.textContent = 'HIDDEN';
         }
 
-        node.addEventListener('click', function () {
+        node.addEventListener('click', e => {
+
             console.log(
-                this.getAttribute('data-pile'),
-                this.getAttribute('data-index'),
-                CardSuit[this.getAttribute('data-suit')],
-                CardValue[this.getAttribute('data-value')]
+                CardValue[this.value],
+                CardSuit[this.suit]
             );
+
+            if (this.isSelectable()) {
+                console.log('can select');
+            }
+
         });
 
         return this.node = node;
+    }
+
+    isSelectable(): boolean {
+        return this.revealed === true;
     }
 
     /**
@@ -94,5 +100,18 @@ export default class Card implements GameElement {
      */
     updateNode(): HTMLElement {
         return this.node;
+    }
+
+    acceptsSibling(card: Card): boolean {
+
+        if (this.isInFoundation) {
+
+        }
+
+        if (this.isInPile) {
+
+        }
+
+        return false;
     }
 }
