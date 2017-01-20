@@ -1,9 +1,14 @@
 var webpack = require('webpack');
+const path  = require('path');
 
 module.exports = {
-    entry: './src/app.ts',
+    entry: {
+        app: ['./app/app.ts']
+    },
     output: {
-        filename: './dist/bundle.js'
+        path: path.resolve(__dirname, './public'),
+        publicPath: 'http://localhost:8080/',
+        filename: '[name].js'
     },
     resolve: {
         extensions: ['.webpack.js', '.web.js', '.ts', '.js']
@@ -14,15 +19,13 @@ module.exports = {
                 test: /\.ts$/,
                 loader: 'ts-loader',
                 exclude: /node_modules/
-            },
-            {
-                test: /\.(png|jpg|gif|svg)$/,
-                loader: 'file',
-                query: {
-                    name: '[name].[ext]?[hash]'
-                }
             }
         ]
+    },
+    devServer: {
+        contentBase: "./public",
+        historyApiFallback: true,
+        noInfo: true
     },
     devtool: '#eval-source-map'
 };
