@@ -10,13 +10,13 @@ export default class Dealer {
      *
      * @returns {Card[]}
      */
-    static createCards(): Card[] {
+    static createCards(selectCallback: Function): Card[] {
         let cards: Card[] = [];
         for (let i = CardValue.Ace; i <= CardValue.King; i++) {
-            cards.push(new Card(i, CardSuit.Clove));
-            cards.push(new Card(i, CardSuit.Diamond));
-            cards.push(new Card(i, CardSuit.Heart));
-            cards.push(new Card(i, CardSuit.Spade));
+            cards.push(new Card(i, CardSuit.Clove, selectCallback));
+            cards.push(new Card(i, CardSuit.Diamond, selectCallback));
+            cards.push(new Card(i, CardSuit.Heart, selectCallback));
+            cards.push(new Card(i, CardSuit.Spade, selectCallback));
         }
 
         return cards;

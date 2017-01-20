@@ -65,7 +65,7 @@ export default class Game {
          * Shuffle the cards before adding them to the stock.
          */
         this.stock = new Stock(this);
-        Dealer.shuffleCards(Dealer.createCards()).forEach(c => this.stock.add(c));
+        Dealer.shuffleCards(Dealer.createCards(this.selectCard)).forEach(c => this.stock.add(c));
 
         /**
          * Distribute cards to 7 piles in the tableau
@@ -119,4 +119,8 @@ export default class Game {
         }
     }
 
+    private selectCard(card: Card): void {
+        this.selected = card;
+        console.log(card);
+    }
 }

@@ -24,14 +24,33 @@ export default class Card implements GameElement {
     public suit: CardSuit;
 
     /**
+     * The callback to run when this card is selected.
+     *
+     * @type {Function}
+     */
+    private selectCallback: Function;
+
+    /**
      * Has this card been revealed
      *
      * @type {boolean}
      */
     public revealed: boolean;
 
+    /**
+     * Is this card currently in a pile?
+     * Set "from outside" when card is being moved.
+     *
+     * @type {boolean}
+     */
     public isInPile: boolean = false;
 
+    /**
+     * Is this card currently in a foundation?
+     * Set "from outside" when card is being moved.
+     *
+     * @type {boolean}
+     */
     public isInFoundation: boolean = false;
 
     /**
@@ -39,12 +58,12 @@ export default class Card implements GameElement {
      *
      * @param value
      * @param suit
-     * @param revealed
+     * @param selectCallback
      */
-    constructor(value: CardValue, suit: CardSuit, revealed = false) {
+    constructor(value: CardValue, suit: CardSuit, selectCallback: Function) {
         this.value = value;
         this.suit = suit;
-        this.revealed = revealed;
+        this.selectCallback = selectCallback;
     }
 
     /**
@@ -74,17 +93,12 @@ export default class Card implements GameElement {
             node.textContent = 'HIDDEN';
         }
 
-        node.addEventListener('click', e => {
-
-            console.log(
-                CardValue[this.value],
-                CardSuit[this.suit]
-            );
-
+        node.addEventListener('click', () => {
+            console.log(CardValue[this.value], CardSuit[this.suit]);
             if (this.isSelectable()) {
                 console.log('can select');
+                this.selectCallback(this);
             }
-
         });
 
         return this.node = node;
@@ -105,11 +119,11 @@ export default class Card implements GameElement {
     acceptsSibling(card: Card): boolean {
 
         if (this.isInFoundation) {
-
+            return card.suit === this.suit && card.value === (this.value + 1);
         }
 
         if (this.isInPile) {
-
+            return card.color() !== this.color() && card.value === (this.value - 1);
         }
 
         return false;
