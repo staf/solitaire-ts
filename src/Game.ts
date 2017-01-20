@@ -82,7 +82,7 @@ export default class Game {
             for (let i = 1; i <= tableau.length; i++) {
                 let index = i - 1;
 
-                if ((tableau.length - i) > tableau[index].cards.length) {
+                if (tableau[index].cards.length < index) {
                     /**
                      * If there are fewer cards than should be hidden in the pile
                      * we simply draw a card and add it to the pile.
@@ -90,7 +90,7 @@ export default class Game {
                     tableau[index].cards.push(this.stock.draw());
                     added++;
 
-                } else if ((tableau.length - i) == tableau[index].cards.length) {
+                } else if (tableau[index].cards.length == index) {
                     /**
                      * If this is the last card we add to this pile we reveal it
                      * before adding it to the pile.
@@ -133,6 +133,7 @@ export default class Game {
         tableauEl.classList.add('tableau');
         tableau.forEach(p => tableauEl.appendChild(p.render()));
         this.board.appendChild(tableauEl);
+
 
     }
 
