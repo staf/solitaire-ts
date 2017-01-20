@@ -9,6 +9,12 @@ import {CardValue, CardSuit} from "../data/CardTypes";
 export default class Foundation extends DomElement {
 
     /**
+     *
+     * @type {string}
+     */
+    protected className: string = 'foundation';
+
+    /**
      * Array containing all the cards of the foundation
      *
      * @type {Array}

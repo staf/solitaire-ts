@@ -70,7 +70,7 @@ export default class Pile extends DomElement {
         this.createNode();
 
         for (let i = 0; i < this.cards.length; i++) {
-            let node = this.cards[i].newNode();
+            let node = this.cards[i].setupNode();
             node.setAttribute('data-pile', String(this.index));
             node.setAttribute('data-index', String(i));
             this.node.appendChild(node);

@@ -1,13 +1,16 @@
-import DomElement from "../DomElement";
 import Card from "./Card";
+import Base from "../game/Base";
+import {GameElement} from "../data/Interfaces";
 
 /**
  * This is the "reserve" of cards. Any cards not
  */
-export default class Stock extends DomElement {
+export default class Stock extends Base implements GameElement {
 
     /**
      * All cards in the stock.
+     *
+     * @type {Array}
      */
     private cards: Card[] = [];
 
@@ -27,7 +30,9 @@ export default class Stock extends DomElement {
      * @returns {Card}
      */
     public draw(): Card {
-        return this.cards.pop();
+        let card = this.cards.pop();
+        this.updateNode();
+        return card;
     }
 
     /**
@@ -48,6 +53,7 @@ export default class Stock extends DomElement {
      */
     public add(card: Card): void {
         this.cards.unshift(card);
+        this.updateNode();
     }
 
     /**
@@ -58,5 +64,22 @@ export default class Stock extends DomElement {
      */
     public undoAdd(): Card {
         return this.cards.shift();
+    }
+
+    public setupNode(): HTMLElement {
+        this.node = document.createElement('div');
+
+        this.node.className = 'stock';
+        this.node.addEventListener('click', () => this.game.drawFromStock());
+
+        return this.updateNode();
+    }
+
+    public updateNode(): HTMLElement {
+        if (this.node) {
+            this.node.textContent = this.cards.length + ' cards';
+        }
+
+        return this.node;
     }
 }

@@ -1,11 +1,13 @@
-import DomElement from "../DomElement";
 import {CardValue, CardSuit, CardColor} from "../data/CardTypes";
+import {GameElement} from "../data/Interfaces";
 
 /**
  * The main Card class. Contains basic data about each card.
  * Can be one of four suits and have one of thirteen values.
  */
-export default class Card extends DomElement {
+export default class Card implements GameElement {
+
+    public node: HTMLElement;
 
     /**
      * The value of the card. Two-Ten, Jack, Queen, King or Ace.
@@ -42,12 +44,9 @@ export default class Card extends DomElement {
      * @param revealed
      */
     constructor(value: CardValue, suit: CardSuit, revealed = false) {
-        super();
-
         this.value = value;
         this.suit = suit;
         this.revealed = revealed;
-
     }
 
     /**
@@ -63,8 +62,7 @@ export default class Card extends DomElement {
      *
      * @returns {HTMLElement}
      */
-    public newNode(): HTMLElement {
-
+    setupNode(): HTMLElement {
         let node = document.createElement('div');
         node.classList.add('card');
         node.setAttribute('data-suit', String(this.suit));
@@ -87,6 +85,14 @@ export default class Card extends DomElement {
             );
         });
 
-        return node;
+        return this.node = node;
+    }
+
+    /**
+     *
+     * @returns {HTMLElement}
+     */
+    updateNode(): HTMLElement {
+        return this.node;
     }
 }
